@@ -1,3 +1,4 @@
+
 package com.example;
 
 import com.google.gson.annotations.Expose;
@@ -19,19 +20,19 @@ public class Main {
     private double tempMax;
     @SerializedName("pressure")
     @Expose
-    private double pressure;
+    private int pressure;
     @SerializedName("sea_level")
     @Expose
-    private double seaLevel;
+    private int seaLevel;
     @SerializedName("grnd_level")
     @Expose
-    private double grndLevel;
+    private int grndLevel;
     @SerializedName("humidity")
     @Expose
-    private double humidity;
+    private int humidity;
     @SerializedName("temp_kf")
     @Expose
-    private double tempKf;
+    private int tempKf;
 
     public double getTemp() {
         return temp;
@@ -85,7 +86,7 @@ public class Main {
         return this;
     }
 
-    public double getPressure() {
+    public int getPressure() {
         return pressure;
     }
 
@@ -98,7 +99,7 @@ public class Main {
         return this;
     }
 
-    public double getSeaLevel() {
+    public int getSeaLevel() {
         return seaLevel;
     }
 
@@ -111,7 +112,7 @@ public class Main {
         return this;
     }
 
-    public double getGrndLevel() {
+    public int getGrndLevel() {
         return grndLevel;
     }
 
@@ -124,7 +125,7 @@ public class Main {
         return this;
     }
 
-    public double getHumidity() {
+    public int getHumidity() {
         return humidity;
     }
 
@@ -137,7 +138,7 @@ public class Main {
         return this;
     }
 
-    public double getTempKf() {
+    public int getTempKf() {
         return tempKf;
     }
 

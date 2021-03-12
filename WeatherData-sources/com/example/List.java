@@ -8,7 +8,7 @@ public class List {
 
     @SerializedName("dt")
     @Expose
-    private double dt;
+    private int dt;
     @SerializedName("main")
     @Expose
     private Main main;
@@ -23,7 +23,7 @@ public class List {
     private Wind wind;
     @SerializedName("visibility")
     @Expose
-    private double visibility;
+    private int visibility;
     @SerializedName("pop")
     @Expose
     private double pop;
@@ -40,7 +40,7 @@ public class List {
     @Expose
     private Snow snow;
 
-    public double getDt() {
+    public int getDt() {
         return dt;
     }
 
@@ -105,7 +105,7 @@ public class List {
         return this;
     }
 
-    public double getVisibility() {
+    public int getVisibility() {
         return visibility;
     }
 

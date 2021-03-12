@@ -1,7 +1,10 @@
+import com.example.WeatherData;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -9,20 +12,11 @@ public class JSON {
 
     private static final String USER_AGENT = "Mozilla/5.0";
 
-
     private static final String GET_URL = "http://api.openweathermap.org/data/2.5/forecast?lat=48.9215&lon=24.7097&APPID=a17a1c41a27a1c5560aa675c81bd1b2d";
 
-    // потрібно для POST-запиту
-    private static final String POST_URL = "http://...";
-    // потрібно для POST-запиту
-    private static final String POST_PARAMS = "...";
-
     public static void main(String[] args) throws IOException {
-
         sendGET();
         System.out.println("GET DONE");
-  //      sendPOST();
-  //      System.out.println("POST DONE");
     }
 
     private static void sendGET() throws IOException {
@@ -32,57 +26,23 @@ public class JSON {
         con.setRequestProperty("User-Agent", USER_AGENT);
         int responseCode = con.getResponseCode();
         System.out.println("GET Response Code :: " + responseCode);
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
-
+            StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
-
-            // print result
             System.out.println(response.toString());
+            Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            WeatherData wdata = (WeatherData) gson.fromJson(response.toString(), WeatherData.class);
         } else {
             System.out.println("GET request not worked");
         }
-
     }
 
-    private static void sendPOST() throws IOException {
-        URL obj = new URL(POST_URL);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", USER_AGENT);
 
-        // For POST only - START
-        con.setDoOutput(true);
-        OutputStream os = con.getOutputStream();
-        os.write(POST_PARAMS.getBytes());
-        os.flush();
-        os.close();
-        // For POST only - END
 
-        int responseCode = con.getResponseCode();
-        System.out.println("POST Response Code :: " + responseCode);
 
-        if (responseCode == HttpURLConnection.HTTP_OK) { //success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            // print result
-            System.out.println(response.toString());
-        } else {
-            System.out.println("POST request not worked");
-        }
-    }
 }

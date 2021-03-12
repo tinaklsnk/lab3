@@ -11,7 +11,7 @@ public class Wind {
     private double speed;
     @SerializedName("deg")
     @Expose
-    private double deg;
+    private int deg;
 
     public double getSpeed() {
         return speed;
@@ -26,7 +26,7 @@ public class Wind {
         return this;
     }
 
-    public double getDeg() {
+    public int getDeg() {
         return deg;
     }
 
