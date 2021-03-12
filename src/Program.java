@@ -9,27 +9,44 @@ import java.util.Scanner;
 
 public class Program {
     public static final int k = 40;
+
     public static void main(String[] args) throws IOException {
-        String text = JSON.sendGET();
-        System.out.println("------------------------");
-        Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-        WeatherData wdata = (WeatherData) gson.fromJson(text, WeatherData.class);
-        for (int i = 0; i < 40; i++) {
-            System.out.println(wdata.getList().get(i).getDtTxt());
-        }
-
-    }
-
-    public static void city()
-    {
         String city;
         FileReader read = null;
         try {
-            read = new FileReader("cities.txt");
+            read = new FileReader("D:\\Studying\\Java\\lab3\\src\\Cities.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Scanner scanner = new Scanner(read);
-        city = scanner.nextLine();
+        try {
+            Scanner scanner = new Scanner(read);
+            while (scanner.hasNextLine()) {
+                city = scanner.nextLine();
+                System.out.println(city);
+                String text = JSON.sendGET(city);
+                Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+                WeatherData data = gson.fromJson(text, WeatherData.class);
+                int a = 0;
+                System.out.println();
+                for (int i = 0; i < k; i++) {
+                    if ((a % 8) == 0)
+                        System.out.println();
+                    System.out.println("......................................");
+                    System.out.println(data.getList().get(i).getDtTxt());
+                    System.out.println("Temperature:\tmin: " + convertTemperature(data.getList().get(i).getMain().getTempMin()) + "\tmax: " + convertTemperature(data.getList().get(i).getMain().getTempMax()));
+                    System.out.println(data.getList().get(i).getWeather().get(0).getMain());
+                    a++;
+                }
+                System.out.println();
+                System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            }
+        } catch (Exception e)
+        {
+            System.out.println("Error");
+        }
+    }
+
+    public static int convertTemperature(double t) {
+        return (int)Math.round(t - 273.15);
     }
 }
